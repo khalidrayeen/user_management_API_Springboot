@@ -5,6 +5,7 @@ import com.example.spring.Repository.UserRepository;
 import com.example.spring.Service.UserService;
 import com.example.spring.dto.UserDto;
 import com.example.spring.entity.User;
+import com.example.spring.exception.EmailAlreadyExists;
 import com.example.spring.exception.ResourceNotfound;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto createUser(UserDto userDto) {
+
+        Optional<User> user2 = userRepository.findByEmail(userDto.getEmail());
+
+        if(user2.isPresent()){
+            throw  new EmailAlreadyExists("EMAIL ALREADY EXISTS");
+        }
 
       //convert UserDto into jpa
         User user = UserMapper.mapToUser(userDto);

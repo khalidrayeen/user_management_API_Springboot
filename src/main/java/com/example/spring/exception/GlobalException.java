@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @ControllerAdvice
 public class GlobalException {
 
-    @ExceptionHandler
+    @ExceptionHandler(ResourceNotfound.class)
     public ResponseEntity<ErrorDetails> handleResourceNotFoundException(ResourceNotfound resourceNotfound, WebRequest webRequest){
 
         ErrorDetails errorDetails = new ErrorDetails(
@@ -22,5 +22,18 @@ public class GlobalException {
         );
 
         return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(EmailAlreadyExists.class)
+    public ResponseEntity<ErrorDetails> handleEmailIdAlreadyExists(EmailAlreadyExists emailAlreadyExists, WebRequest webRequest){
+
+        ErrorDetails errorDetails1 = new ErrorDetails(
+                LocalDateTime.now(),
+                emailAlreadyExists.getMessage(),
+                webRequest.getDescription(false),
+                "EMAIL ALREADY EXISTS"
+        );
+
+        return new ResponseEntity<>(errorDetails1, HttpStatus.BAD_REQUEST);
     }
 }
