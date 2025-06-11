@@ -4,6 +4,7 @@ package com.example.spring.Controller;
 import com.example.spring.Service.UserService;
 import com.example.spring.dto.UserDto;
 import com.example.spring.entity.User;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +26,7 @@ public class UserController {
 
     //http://localhost:8080/api/signup
     @PostMapping("/signup")
-    public ResponseEntity<UserDto> createuser(@RequestBody UserDto user){
+    public ResponseEntity<UserDto> createuser(@Valid @RequestBody UserDto user){
 
         UserDto user1 = userService.createUser(user);
        return new ResponseEntity<>(user1, HttpStatus.CREATED);
@@ -54,7 +55,7 @@ public class UserController {
 
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable Long id , @RequestBody User user){
+    public ResponseEntity<User> updateUser(@PathVariable Long id , @Valid @RequestBody User user){
         user.setId(id);
         User updatedUser = userService.updateUser(user);
         return new ResponseEntity<>(updatedUser,HttpStatus.OK);

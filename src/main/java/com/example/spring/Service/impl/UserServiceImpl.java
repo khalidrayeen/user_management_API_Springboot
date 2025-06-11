@@ -7,6 +7,7 @@ import com.example.spring.dto.UserDto;
 import com.example.spring.entity.User;
 import com.example.spring.exception.EmailAlreadyExists;
 import com.example.spring.exception.ResourceNotfound;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +26,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto createUser(UserDto userDto) {
+    public UserDto createUser(@Valid UserDto userDto) {
 
         Optional<User> user2 = userRepository.findByEmail(userDto.getEmail());
 
@@ -64,7 +65,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User updateUser(User user) {
+    public User updateUser(@Valid User user) {
         User existingUser = userRepository.findById(user.getId()).orElseThrow(
                 ()-> new ResourceNotfound("User","id",user.getId())
         );

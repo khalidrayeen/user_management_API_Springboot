@@ -1,7 +1,8 @@
 package com.example.spring.dto;
 
 
-
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
 
 public class UserDto {
 
@@ -9,7 +10,14 @@ public class UserDto {
 
     private Long id;
 
+    @NotEmpty(message = "First name must not be empty")
     private String firstName;
+    @NotEmpty(message = "Last name must not be empty")
+    private String lastName;
+
+    @NotEmpty(message = "Email name must not be empty")
+    @Email(message = "Enter valid email address!")
+    private String email;
 
     public Long getId() {
         return id;
@@ -43,7 +51,7 @@ public class UserDto {
         this.email = email;
     }
 
-    private String lastName;
+
 
     public UserDto(Long id, String firstName, String lastName, String email) {
         this.id = id;
@@ -52,5 +60,5 @@ public class UserDto {
         this.email = email;
     }
 
-    private String email;
+
 }
